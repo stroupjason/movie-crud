@@ -1,9 +1,6 @@
 //CREATES AN INSTANT CONNECTION TO DATABASE - CRUD PART 08
-
-const environment = process.env.NODE_ENV || 'development';
-const config = require('../knexfile');
-const environmentConfig = config[environment];
+const env = process.env.NODE_ENV || 'development';
+const config = require('../knexfile.js')[env];
 const knex = require('knex');
-const connection = knex(environmentConfig);
-
+const connection = knex(config);
 module.exports = connection;

@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>show-page</title>
-    <link rel="stylesheet" href="./style.css">
-  </head>
-  <body>
-<h1>Show Page</h1>
-<a href="./new-page.html">Add a Movie!</a>
-<br><a href="./home.html">Home</a>
-
-  </body>
-</html>
+<h1>Movie</h1>
+  <table class="table table-striped">
+    <tr>
+      <th>Title</th>
+      <th>Director</th>
+      <th>Date</th>
+      <th>Rating</th>
+      <th>Poster</th>
+    </tr>
+    <tr>
+    <td><a href="/movies/{{movie.id}}">{{movie.title}}</a></td>
+    <td>{{movie.director}}</td>
+    <td>{{movie.year}}</td>
+    <td>{{movie.my_rating}}</td>
+    <td><img src="{{movie.poster_url}}" alt=""></td>
+  </tr>
+    <a href="/movies/{{ movie.id }}/edit" type="button" name="button" class="btn btn-success">Edit</a>
+  </table>
