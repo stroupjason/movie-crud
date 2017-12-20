@@ -63,8 +63,8 @@ router.post('/', (req, res, next) => {
   let movie = {
     title: req.body.title,
     director: req.body.director,
-    year: req.body.year,
-    rating: req.body.my_rating,
+    year: parseInt('0' + req.body.year),
+    rating: parseInt('0' + req.body.rating),
     poster_url: req.body.poster_url
   }
   knex('movies').insert(movie, '*')
