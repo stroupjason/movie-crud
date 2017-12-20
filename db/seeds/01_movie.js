@@ -1,28 +1,47 @@
 exports.seed = function(knex) {
-  return knex('movies').del()
+  return knex('movie').del()
   .then(() => {
-    return knex('movies').insert([
-      {
-        id: 1,
-        title: 'The Goonies',
-        director: 'Steven Spielberg',
-        year: '01/01/1988',
-        rating: 9,
-        poster_url: 'https://images-na.ssl-images-amazon.com/images/I/61w2wGIKvqL._SY300_.jpg'
-      },
-      {
-        id: 2,
-        title: 'The Sandlot',
-        director: 'Old Man',
-        year: '01/01/1994',
-        rating: 10,
-        poster_url: 'https://castleofjudah.files.wordpress.com/2013/07/sandlot.jpg'
-      }
-    ])
-    .then(() => {
-      return knex.raw(
-        "SELECT setval('movies_id_seq', (SELECT MAX(id) FROM movies));"
-      );
-    });
-  });
+    return knex('movie').insert([
+  {
+    id: 1,
+    title: "Schizopolis",
+    director: "Steven Soderbergh",
+    year: "1976",
+    rating: 4,
+    poster_url: "http://www.imdb.com/title/tt0117561/mediaviewer/rm2174000896"
+  },
+  {
+    id: 2,
+    title: "Nashville",
+    director: "Robert Altman",
+    year: "1976",
+    rating: 5,
+    poster_url:"http://www.imdb.com/title/tt0073440/mediaviewer/rm1703419648"
+  },
+  {
+    id: 3,
+    title: "Idiocracy",
+    director: "Mike Judge",
+    year: "2006",
+    rating: 5,
+    poster_url:"http://www.imdb.com/title/tt0387808/mediaviewer/rm1934300160"
+  },
+  {
+    id: 4,
+    title: "Love Actually",
+    director: "Richard Curtis",
+    year: "2003",
+    rating: 1,
+    poster_url:"http://www.imdb.com/title/tt0314331/mediaviewer/rm3436419328"
+  },
+  {
+    id: 5,
+    title: "Holy Moutain",
+    director: "Alejandro Jodorowsky",
+    year: "1973",
+    rating: 4,
+    poster_url:"http://www.imdb.com/title/tt0071615/mediaviewer/rm3911191040"
+  },
+])
+});
 }

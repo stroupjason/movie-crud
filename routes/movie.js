@@ -4,24 +4,28 @@ const knex = require('../db/knex');
 
 // GET ALL MOVIES
 router.get('/', (req, res, next) => {
-  knex('movies').select('*')
+  knex('movie').select('*')
   .then(movies => {
-    res.render('movies/index', {
+    res.render('/', {
       allMovies: movies
     })
   })
+  .catch(err => next(err))
+  
 })
 
 // ROUTE TO EDIT
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit-page', (req, res) => {
   let id = req.params.id
-  knex('movies').where({ id })
+  knex('movie').where({ id })
   .first()
   .then((movie) => {
-    res.render('movies/edit', {
+    res.render('movie/edit-page', {
       movie
     })
   })
+  .catch(err => next(err))
+
 })
 // EDIT (PUT) MOVIE
 router.put('/:id', (req, res, next) => {
@@ -30,31 +34,34 @@ router.put('/:id', (req, res, next) => {
     title: req.body.title,
     director: req.body.director,
     year: req.body.year,
-    my_rating: req.body.my_rating,
+    rating: req.body.rating,
     poster_url: req.body.poster_url
   }
-  knex('movies').update(movie, '*').where({ id })
+  knex('movie').update(movie, '*').where({ id })
   .then((newMovie) => {
     let id = newMovie[0].id
-    res.redirect(`/movies/${id}`)
+    res.redirect(`/movie/${id}`)
   })
+  .catch(next)
 })
 
 // NEW FORM SUBMISSION
-router.get('/new', (req, res, next) => {
-  res.render('movies/new')
+router.get('/new-page', (req, res, next) => {
+  res.render('movie/new-page')
 })
 
 // GET MOVIE BY ID
 router.get('/:id', (req, res, next) => {
   let id = req.params.id
-  knex('movies').select('*').where({ id })
+  knex('movie').select('*').where({ id })
   .first()
   .then(movie => {
-    res.render('movies/show', {
+    res.render('movie/show-page', {
       movie
     })
   })
+  .catch(err => next(err))
+
 })
 
 // SUBMIT NEW MOVIE
@@ -63,24 +70,27 @@ router.post('/', (req, res, next) => {
     title: req.body.title,
     director: req.body.director,
     year: req.body.year,
-    my_rating: req.body.my_rating,
+    rating: req.body.rating,
     poster_url: req.body.poster_url
   }
-  knex('movies').insert(movie, '*')
+  knex('movie').insert(movie, '*')
   .then((newMovie) => {
     let id = newMovie[0].id
     console.log(id);
-    res.redirect(`/movies/${id}`)
+    res.redirect(`/movie/${id}`)
   })
+  .catch(err => next(err))
 })
 
 // DELETE MOVIE
 router.delete('/:id', (req, res, next) => {
   let id = req.params.id
-  knex('movies').del().where({ id })
+  knex('movie').del().where({ id })
   .then(() => {
-    res.redirect('/movies')
+    res.redirect('/movie')
   })
+  .catch(err => next(err))
+
 })
 
 

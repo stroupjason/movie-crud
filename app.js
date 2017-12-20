@@ -8,12 +8,12 @@ var movies = require('./routes/movie')
 var override = require('method-override')
 var hbs = require('hbs');
 
-hbs.registerPartials(path.join(__dirname + "/views/shared"));
+hbs.registerPartials(path.join(__dirname + "/public/shared"));
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('public', path.join(__dirname, 'public'));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
@@ -26,7 +26,7 @@ app.use(override('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/movies', movies)
+app.use('/movie', movies)
 
 
 // catch 404 and forward to error handler
@@ -37,14 +37,21 @@ app.use(function(req, res, next) {
 });
 
 // error handler
+
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.status(err.status || 500);
+ res.json({
+   message: err.message,
+   error: req.app.get('env') === 'development' ? err : {}
+});
+
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+  // res.status(err.status || 500);
+  // res.render('error');
+ });
 
 module.exports = app;
