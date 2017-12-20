@@ -15,6 +15,7 @@ var app = express();
 // view engine setup
 app.set('public', path.join(__dirname, 'public'));
 app.set('view engine', 'hbs');
+app.set('views', __dirname + '/public');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

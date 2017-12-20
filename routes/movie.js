@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
     })
   })
   .catch(err => next(err))
-  
+
 })
 
 // ROUTE TO EDIT
@@ -56,7 +56,7 @@ router.get('/:id', (req, res, next) => {
   knex('movie').select('*').where({ id })
   .first()
   .then(movie => {
-    res.render('movie/show-page', {
+    res.render('show-page', {
       movie
     })
   })
@@ -69,7 +69,7 @@ router.post('/', (req, res, next) => {
   let movie = {
     title: req.body.title,
     director: req.body.director,
-    year: req.body.year,
+    year: parseInt(req.body.year),
     rating: req.body.rating,
     poster_url: req.body.poster_url
   }
