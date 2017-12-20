@@ -4,18 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var index = require('./routes/index');
-var movies = require('./routes/movie')
+var movies = require('./routes/movies')
 var override = require('method-override')
 var hbs = require('hbs');
 
-hbs.registerPartials(path.join(__dirname + "/public/shared"));
+hbs.registerPartials(path.join(__dirname + "/views/shared"));
 
 var app = express();
 
 // view engine setup
-app.set('public', path.join(__dirname, 'public'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.set('views', __dirname + '/public');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -27,7 +26,7 @@ app.use(override('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/movie', movies)
+app.use('/movies', movies)
 
 
 // catch 404 and forward to error handler
@@ -38,21 +37,14 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
- res.json({
-   message: err.message,
-   error: req.app.get('env') === 'development' ? err : {}
-});
-
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  // res.status(err.status || 500);
-  // res.render('error');
- });
+  res.status(err.status || 500);
+  res.render('error');
+});
 
 module.exports = app;
